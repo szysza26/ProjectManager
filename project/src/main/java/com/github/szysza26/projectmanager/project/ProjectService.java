@@ -1,18 +1,29 @@
 package com.github.szysza26.projectmanager.project;
 
-import lombok.AllArgsConstructor;
-import org.springframework.scheduling.config.Task;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class ProjectService {
+
+	@Value ("${app.notification-queue-name}")
+	private String notificationQueueName;
 
 	private final ProjectRepository projectRepository;
 	private final ProjectConverter projectConverter;
 	private final TaskClient taskClient;
+	private final RabbitTemplate rabbitTemplate;
+
+	public ProjectService (ProjectRepository projectRepository, ProjectConverter projectConverter,
+						   TaskClient taskClient, RabbitTemplate rabbitTemplate) {
+		this.projectRepository = projectRepository;
+		this.projectConverter = projectConverter;
+		this.taskClient = taskClient;
+		this.rabbitTemplate = rabbitTemplate;
+	}
 
 	public List<ProjectSummaryDTO> getProjects() {
 		List<Project> projects = projectRepository.findAll ();
@@ -32,6 +43,8 @@ public class ProjectService {
 		project.setDescription (createProjectRequest.getDescription ());
 		projectRepository.save (project);
 
+		rabbitTemplate.convertAndSend (notificationQueueName, "project created");
+
 		return projectConverter.projectToProjectDetailedDTO (project);
 	}
 
@@ -43,10 +56,13 @@ public class ProjectService {
 		project.setDescription (createProjectRequest.getDescription ());
 		projectRepository.save (project);
 
+		rabbitTemplate.convertAndSend (notificationQueueName, "project updated");
+
 		return projectConverter.projectToProjectDetailedDTO (project);
 	}
 
 	public void deleteProject(Long projectId) {
+		rabbitTemplate.convertAndSend (notificationQueueName, "project deleted");
 		taskClient.deleteTasksForProject (projectId);
 		projectRepository.deleteById (projectId);
 	}

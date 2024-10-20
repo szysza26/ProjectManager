@@ -38,4 +38,9 @@ public class TaskController {
 	public void deleteTask(@PathVariable Long taskId) {
 		taskService.deleteTask (taskId);
 	}
+
+	@DeleteMapping("/tasks/project/{projectId}")
+	public void deleteTasksForProject(@PathVariable Long projectId) {
+		taskService.deleteTasksForProject (projectId);
+	}
 }

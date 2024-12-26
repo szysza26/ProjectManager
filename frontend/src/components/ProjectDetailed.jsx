@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getProject } from "../api/projects";
-import { getTasks } from "../api/tasks";
+import { getTasksForProject } from "../api/tasks";
 import { Avatar, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography } from "@mui/material";
 import TaskIcon from '@mui/icons-material/Task';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -31,7 +31,7 @@ const ProjectDetailed = ({projectId, goToProjectListPage, goToTaskDetailedPage})
         setIsErrorTasks(false);
         setIsFetchingTasks(true);
 
-        getTasks(projectId)
+        getTasksForProject(projectId)
             .then(res => setTasks(res))
             .catch(() => setIsErrorTasks(true))
             .finally(() => setIsFetchingTasks(false));

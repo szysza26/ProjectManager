@@ -1,18 +1,13 @@
-export const getTasks = async (projectId) => {
-    await new Promise(r => setTimeout(r, 2000)); // symulate request to api
-    return [
-        {id: 1, name: "Task 1", createdAt: "2024-10-29 18:00"},
-        {id: 2, name: "Task 2", createdAt: "2024-10-30 18:00"},
-        {id: 3, name: "Task 3", createdAt: "2024-10-31 18:00"},
-    ];
+import axios from "axios";
+
+export const getTasksForProject = async (projectId) => {
+    return await axios.get(`${import.meta.env.VITE_URL}/tasks/project/${projectId}`)
+        .then(res => res.data)
+        .catch(err => console.err(err));
 }
 
 export const getTask = async (taskId) => {
-    await new Promise(r => setTimeout(r, 2000)); // symulate request to api
-    return {
-        id: taskId,
-        name: "Task " + taskId,
-        createdAt: "2024-10-31 18:00",
-        description: "Task description " + taskId
-    };
+    return await axios.get(`${import.meta.env.VITE_URL}/tasks/${taskId}`)
+        .then(res => res.data)
+        .catch(err => console.err(err));
 }

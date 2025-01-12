@@ -9,6 +9,7 @@ import { useState } from 'react';
 import ProjectList from './components/ProjectList';
 import ProjectDetailed from './components/ProjectDetailed';
 import TaskDetailed from './components/TaskDetailed';
+import NewProject from './components/NewProject';
 
 function App() {
     const [page, setPage] = useState({
@@ -26,6 +27,10 @@ function App() {
         });
     }
 
+    const goToNewProjectPage = () => {
+        setPage({name: "NewProject"});
+    }
+
     const goToTaskDetailedPage = (projectId, taskId) => {
         setPage({
             name: "TaskDetailed",
@@ -39,6 +44,7 @@ function App() {
             case "ProjectList":
                 return <ProjectList
                     goToProjectDetailedPage={goToProjectDetailedPage}
+                    goToNewProjectPage={goToNewProjectPage}
                 />;
             case "ProjectDetailed":
                 return <ProjectDetailed
@@ -46,6 +52,10 @@ function App() {
                     goToProjectListPage={goToProjectListPage}
                     goToTaskDetailedPage={goToTaskDetailedPage}
                 />
+            case "NewProject":
+                return <NewProject
+                    goToProjectListPage={goToProjectListPage}
+                />;
             case "TaskDetailed":
                 return <TaskDetailed
                     projectId={page.projectId}

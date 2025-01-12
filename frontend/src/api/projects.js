@@ -11,3 +11,13 @@ export const getProject = async (projectId) => {
         .then(res => res.data)
         .catch(err => console.err(err));
 }
+
+export const createProject = async (projectName, projectDetailed) => {
+    const data = {
+        name: projectName,
+        description: projectDetailed
+    };
+    
+    return await axios.post(`${import.meta.env.VITE_URL}/projects`, data)
+        .catch(err => console.err(err));
+}

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { getProjects } from "../api/projects";
-import { Avatar, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography } from "@mui/material";
+import { Avatar, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography, Button } from "@mui/material";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
-const ProjectList = ({goToProjectDetailedPage}) => {
+const ProjectList = ({goToProjectDetailedPage, goToNewProjectPage}) => {
     const [projects, setProjects] = useState([]);
     const [isFetching, setIsFetching] = useState(true);
     const [isError, setIsError] = useState(false);
@@ -34,6 +34,7 @@ const ProjectList = ({goToProjectDetailedPage}) => {
                     </ListItem>
                 )}
             </List>}
+            <Button onClick={goToNewProjectPage} >New project</Button>
         </>
     )
 }

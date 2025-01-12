@@ -17,7 +17,13 @@ export const createProject = async (projectName, projectDetailed) => {
         name: projectName,
         description: projectDetailed
     };
-    
+
     return await axios.post(`${import.meta.env.VITE_URL}/projects`, data)
+        .then(res => res.data)
+        .catch(err => console.err(err));
+}
+
+export const deleteProject = async (projectId) => {
+    return await axios.delete(`${import.meta.env.VITE_URL}/projects/${projectId}`)
         .catch(err => console.err(err));
 }

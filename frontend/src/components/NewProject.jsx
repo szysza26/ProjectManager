@@ -1,22 +1,23 @@
 import { useState } from "react";
-import { IconButton, Typography, TextField, Button, CircularProgress } from "@mui/material";
+import { IconButton, Typography, TextField, Button } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { createProject } from "../api/projects";
+import ModalCircularProgress from "./ModalCircularProgress";
 
-const NewProject = ({goToProjectListPage}) => {
+const NewProject = ({goToProjectListPage, goToProjectDetailedPage}) => {
 
     const [projectName, setProjectName] = useState("");
     const [projectDescription, setProjectDescription] = useState("");
-    const [isFetching, setIsFetching] = useState(false);
+    const [isCreatingProject, setIsCreatingProject] = useState(false);
     const [isError, setIsError] = useState(false);
 
     const onCliclCreateProject = () => {
-        setIsFetching(true);
+        setIsCreatingProject(true);
         setIsError(false);
         createProject(projectName, projectDescription)
-            .then(res => goToProjectListPage())
+            .then(res => goToProjectDetailedPage(res.id))
             .catch(err => setIsError(true))
-            .finally(() => setIsFetching(false));
+            .finally(() => setIsCreatingProject(false));
     }
 
     return (
@@ -26,14 +27,15 @@ const NewProject = ({goToProjectListPage}) => {
                 <Typography>Project list</Typography>
             </IconButton>
             <Typography variant="h3" sx={{mt: 3}}>New project:</Typography>
-            {isFetching && <CircularProgress />}
+            <ModalCircularProgress
+                isOpen={isCreatingProject}
+            />
             {isError && <Typography sx={{mt: 3, color: 'red'}}>Cannot create a new project</Typography>}
             <TextField
                 label="Name"
                 fullWidth
                 sx={{mt: 3}}
                 required
-                disabled={isFetching}
                 error={!projectName}
                 value={projectName}
                 onChange={e => setProjectName(e.target.value)}
@@ -42,7 +44,6 @@ const NewProject = ({goToProjectListPage}) => {
                 label="Description"
                 fullWidth
                 sx={{mt: 3}}
-                disabled={isFetching}
                 value={projectDescription}
                 onChange={e => setProjectDescription(e.target.value)}
             />
@@ -50,7 +51,7 @@ const NewProject = ({goToProjectListPage}) => {
                 variant="contained"
                 fullWidth
                 sx={{mt: 3}}
-                disabled={isFetching || !projectName}
+                disabled={!projectName}
                 onClick={onCliclCreateProject}
             >
                 Create project

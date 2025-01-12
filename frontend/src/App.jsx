@@ -55,6 +55,7 @@ function App() {
             case "NewProject":
                 return <NewProject
                     goToProjectListPage={goToProjectListPage}
+                    goToProjectDetailedPage={goToProjectDetailedPage}
                 />;
             case "TaskDetailed":
                 return <TaskDetailed

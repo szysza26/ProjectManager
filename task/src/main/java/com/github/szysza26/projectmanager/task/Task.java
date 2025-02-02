@@ -20,6 +20,8 @@ public class Task {
 	private Long projectId;
 	private String name;
 	private String description;
+	@Enumerated(EnumType.STRING) // Store as a string in the database
+	private Status status = Status.OPEN;
 	@CreationTimestamp
 	@Column (updatable = false)
 	private LocalDateTime createdAt;

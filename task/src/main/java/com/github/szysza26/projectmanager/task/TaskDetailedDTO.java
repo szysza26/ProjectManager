@@ -18,4 +18,5 @@ public class TaskDetailedDTO {
 	private String name;
 	private String description;
 	private LocalDateTime createdAt;
+	private Status status;
 }

@@ -98,7 +98,7 @@ const ProjectDetailed = ({projectId, goToProjectListPage, goToTaskDetailedPage, 
                                     <TaskIcon/>
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={task.name} secondary={task.createdAt}/>
+                            <ListItemText primary={`${task.name} (${task.status})`} secondary={task.createdAt}/>
                         </ListItemButton>
                     </ListItem>
                 )}

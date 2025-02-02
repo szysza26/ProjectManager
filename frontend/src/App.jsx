@@ -10,6 +10,7 @@ import ProjectList from './components/ProjectList';
 import ProjectDetailed from './components/ProjectDetailed';
 import TaskDetailed from './components/TaskDetailed';
 import NewProject from './components/NewProject';
+import NewTask from './components/NewTask';
 
 function App() {
     const [page, setPage] = useState({
@@ -39,6 +40,13 @@ function App() {
         })
     }
 
+    const goToNewTaskPage = (projectId) => {
+        setPage({
+            name: "NewTask",
+            projectId: projectId,
+        })
+    }
+
     const getPage = () => {
         switch (page.name) {
             case "ProjectList":
@@ -51,6 +59,7 @@ function App() {
                     projectId={page.projectId}
                     goToProjectListPage={goToProjectListPage}
                     goToTaskDetailedPage={goToTaskDetailedPage}
+                    goToNewTaskPage={goToNewTaskPage}
                 />
             case "NewProject":
                 return <NewProject
@@ -63,6 +72,12 @@ function App() {
                     taskId={page.taskId}
                     goToProjectDetailedPage={goToProjectDetailedPage}
                 />
+            case "NewTask":
+                return <NewTask
+                    projectId={page.projectId}
+                    goToProjectDetailedPage={goToProjectDetailedPage}
+                    goToTaskDetailedPage={goToTaskDetailedPage}
+                />;
             default:
                 return "Not found";
         }

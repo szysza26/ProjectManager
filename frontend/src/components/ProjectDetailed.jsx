@@ -7,7 +7,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ConfirmDialog from "./ConfirmDialog";
 import ModalCircularProgress from "./ModalCircularProgress";
 
-const ProjectDetailed = ({projectId, goToProjectListPage, goToTaskDetailedPage}) => {
+const ProjectDetailed = ({projectId, goToProjectListPage, goToTaskDetailedPage, goToNewTaskPage}) => {
     const [project, setProject] = useState(null);
     const [isFetchingProject, setIsFetchingProject] = useState(true);
     const [isErrorProject, setIsErrorProject] = useState(false);
@@ -103,6 +103,7 @@ const ProjectDetailed = ({projectId, goToProjectListPage, goToTaskDetailedPage})
                     </ListItem>
                 )}
             </List>}
+            <Button onClick={() => goToNewTaskPage(projectId)} >New task</Button>
         </>
     )
 }

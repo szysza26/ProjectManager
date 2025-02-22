@@ -9,6 +9,7 @@ const ProjectList = ({goToProjectDetailedPage, goToNewProjectPage}) => {
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
+        console.log("loading")
         getProjects()
             .then(res => setProjects(res))
             .catch(() => setIsError(true))

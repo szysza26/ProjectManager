@@ -5,18 +5,14 @@ import '@fontsource/roboto/700.css';
 import './App.css'
 import { Container, CssBaseline } from '@mui/material';
 import Nav from './components/Nav';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import ProjectList from './components/ProjectList';
 import ProjectDetailed from './components/ProjectDetailed';
 import TaskDetailed from './components/TaskDetailed';
 import NewProject from './components/NewProject';
 import NewTask from './components/NewTask';
-import { AuthContext } from './AuthProvider';
-import LoginPage from './components/LoginPage';
-
 
 const App = () => {
-    const { token } = useContext(AuthContext);
 
     const [page, setPage] = useState({
         name: "ProjectList"
@@ -88,23 +84,15 @@ const App = () => {
         }
     }
 
-    const Page = () => {
-        return (
-            <>
-                <CssBaseline/>
-                <Nav
-                    goToProjectListPage={goToProjectListPage}
-                />
-                <Container fixed>
-                    {getPage()}
-                </Container>
-            </>
-        )
-    }
-
     return (
         <>
-            {token ? <Page /> : <LoginPage />}
+            <CssBaseline/>
+            <Nav
+                goToProjectListPage={goToProjectListPage}
+            />
+            <Container fixed>
+                {getPage()}
+            </Container>
         </>
     )
 }

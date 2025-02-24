@@ -1,13 +1,13 @@
-import axios from "axios";
+import API from "./api";
 
 export const getTasksForProject = async (projectId) => {
-    return await axios.get(`${import.meta.env.VITE_URL}/tasks/project/${projectId}`)
+    return await API.get(`/tasks/project/${projectId}`)
         .then(res => res.data)
         .catch(err => console.err(err));
 }
 
 export const getTask = async (taskId) => {
-    return await axios.get(`${import.meta.env.VITE_URL}/tasks/${taskId}`)
+    return await API.get(`/tasks/${taskId}`)
         .then(res => res.data)
         .catch(err => console.err(err));
 }
@@ -18,12 +18,12 @@ export const createTask = async (projectId, taskName, taskDetailed) => {
         description: taskDetailed
     };
 
-    return await axios.post(`${import.meta.env.VITE_URL}/tasks/project/${projectId}`, data)
+    return await API.post(`/tasks/project/${projectId}`, data)
         .then(res => res.data)
         .catch(err => console.err(err));
 }
 
 export const deleteTask = async (taskId) => {
-    return await axios.delete(`${import.meta.env.VITE_URL}/tasks/${taskId}`)
+    return await API.delete(`/tasks/${taskId}`)
         .catch(err => console.err(err));
 }

@@ -13,13 +13,19 @@ export const AuthProvider = ({ children }) => {
     const login = async (username, password) => {
         return await getTokenByPassword(username, password)
             .then(data => {
-                setToken(data.access_token);
-                localStorage.setItem("refresh_token", data.refresh_token);
+                auth(data);
             })
     };
 
+    const auth = (data) => {
+        setToken(data.access_token);
+        localStorage.setItem("token", data.access_token);
+        localStorage.setItem("refresh_token", data.refresh_token);
+    }
+
     const logout = () => {
         setToken(null);
+        localStorage.removeItem("token");
         localStorage.removeItem("refresh_token");
     };
 
@@ -33,8 +39,7 @@ export const AuthProvider = ({ children }) => {
 
         getTokenByRefreshToken(refreshToken)
             .then(data => {
-                setToken(data.access_token);
-                localStorage.setItem("refresh_token", data.refresh_token);
+                auth(data);
             })
             .catch(() => {
                 logout();
@@ -63,8 +68,7 @@ export const AuthProvider = ({ children }) => {
         const timeout = setTimeout(() => {
             getTokenByRefreshToken(refreshToken)
                 .then(data => {
-                    setToken(data.access_token);
-                    localStorage.setItem("refresh_token", data.refresh_token);
+                    auth(data);
                 })
                 .catch(() => {
                     logout();

@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../AuthProvider';
-import { TextField, Button, Container, Paper, Typography } from "@mui/material";
+import { TextField, Button, Container, Paper, Typography, Alert } from "@mui/material";
 
 const LoginPage = () => {
     const { login } = useContext(AuthContext);
@@ -20,6 +20,7 @@ const LoginPage = () => {
           <Typography variant="h5" align="center" gutterBottom>
             Login
           </Typography>
+          {error && <Alert severity="error">{error}</Alert>}
           <form onSubmit={handleSubmit}>
             <TextField
               label="Username"
@@ -44,17 +45,11 @@ const LoginPage = () => {
               color="primary"
               fullWidth
               style={{ marginTop: 16 }}
+              disabled={!username || !password}
             >
               Submit
             </Button>
           </form>
-          {error && 
-            <Typography
-              color="error"
-              style={{ marginTop: 16 }}
-            >
-              {error}
-            </Typography>}
         </Paper>
       </Container>
     );

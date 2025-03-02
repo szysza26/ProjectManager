@@ -17,5 +17,6 @@ public class TaskSummaryDTO {
 	private Long projectId;
 	private String name;
 	private LocalDateTime createdAt;
+	private String createdBy;
 	private Status status;
 }

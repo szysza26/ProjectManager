@@ -50,6 +50,7 @@ const TaskDetailed = ({projectId, taskId, goToProjectDetailedPage}) => {
             {task !== null && <>
                 <Typography>Task name: {task.name}</Typography>
                 <Typography>Task created at: {task.createdAt}</Typography>
+                <Typography>Task created by: {task.createdBy}</Typography>
                 <Typography>Task status: {task.status}</Typography>
                 <Typography>Task description: {task.description}</Typography>
             </>}

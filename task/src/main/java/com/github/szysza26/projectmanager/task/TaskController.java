@@ -2,6 +2,7 @@ package com.github.szysza26.projectmanager.task;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,14 +25,9 @@ public class TaskController {
 
 	@PostMapping ("/tasks/project/{projectId}")
 	public TaskDetailedDTO createTask(@PathVariable Long projectId,
-									  @Valid @RequestBody CreateTaskRequest createTaskRequest) {
-		return taskService.createTask (projectId, createTaskRequest);
-	}
-
-	@PutMapping("/tasks/{taskId}")
-	public TaskDetailedDTO updateTask(@PathVariable Long taskId,
-									  @Valid @RequestBody CreateTaskRequest createTaskRequest) {
-		return taskService.updateTask (taskId, createTaskRequest);
+									  @Valid @RequestBody CreateTaskRequest createTaskRequest,
+									  Authentication authentication) {
+		return taskService.createTask (projectId, createTaskRequest, authentication.getName ());
 	}
 
 	@DeleteMapping("/tasks/{taskId}")

@@ -37,26 +37,14 @@ public class ProjectService {
 		return projectConverter.projectToProjectDetailedDTO (project);
 	}
 
-	public ProjectDetailedDTO createProject(CreateProjectRequest createProjectRequest) {
+	public ProjectDetailedDTO createProject(CreateProjectRequest createProjectRequest, String userId) {
 		Project project = new Project ();
 		project.setName (createProjectRequest.getName ());
 		project.setDescription (createProjectRequest.getDescription ());
+		project.setCreatedBy (userId);
 		projectRepository.save (project);
 
 		rabbitTemplate.convertAndSend (notificationQueueName, "project created");
-
-		return projectConverter.projectToProjectDetailedDTO (project);
-	}
-
-	public ProjectDetailedDTO updateProject(Long projectId, CreateProjectRequest createProjectRequest) {
-		Project project = projectRepository.findById (projectId)
-				.orElseThrow (() -> new RuntimeException ("Project not found"));
-
-		project.setName (createProjectRequest.getName ());
-		project.setDescription (createProjectRequest.getDescription ());
-		projectRepository.save (project);
-
-		rabbitTemplate.convertAndSend (notificationQueueName, "project updated");
 
 		return projectConverter.projectToProjectDetailedDTO (project);
 	}

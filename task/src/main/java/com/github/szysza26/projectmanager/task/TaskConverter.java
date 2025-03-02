@@ -7,11 +7,11 @@ public class TaskConverter {
 
 	public TaskSummaryDTO taskToTaskSummaryDTO(Task task) {
 		return new TaskSummaryDTO(task.getId (), task.getProjectId (), task.getName (), task.getCreatedAt (),
-								  task.getStatus ());
+								  task.getCreatedBy (), task.getStatus ());
 	}
 
 	public TaskDetailedDTO taskToTaskDetailedDTO(Task task) {
 		return new TaskDetailedDTO(task.getId (), task.getProjectId (), task.getName (), task.getDescription (),
-								   task.getCreatedAt (), task.getStatus ());
+								   task.getCreatedAt (), task.getCreatedBy (), task.getStatus ());
 	}
 }

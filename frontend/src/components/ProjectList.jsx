@@ -30,7 +30,7 @@ const ProjectList = ({goToProjectDetailedPage, goToNewProjectPage}) => {
                                     <FormatListBulletedIcon/>
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={project.name} secondary={project.createdAt}/>
+                            <ListItemText primary={`${project.name} (${project.active})`} secondary={`${project.createdAt} (${project.createdBy})`}/>
                         </ListItemButton>
                     </ListItem>
                 )}

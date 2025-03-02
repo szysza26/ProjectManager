@@ -2,6 +2,7 @@ package com.github.szysza26.projectmanager.project;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,14 +24,9 @@ public class ProjectController {
 	}
 
 	@PostMapping("/projects")
-	public ProjectDetailedDTO createProject(@Valid @RequestBody CreateProjectRequest createProjectRequest) {
-		return projectService.createProject (createProjectRequest);
-	}
-
-	@PutMapping("/projects/{projectId}")
-	public ProjectDetailedDTO updateProject(@PathVariable Long projectId,
-											@Valid @RequestBody CreateProjectRequest createProjectRequest) {
-		return projectService.updateProject (projectId, createProjectRequest);
+	public ProjectDetailedDTO createProject(@Valid @RequestBody CreateProjectRequest createProjectRequest,
+											Authentication authentication) {
+		return projectService.createProject (createProjectRequest, authentication.getName ());
 	}
 
 	@DeleteMapping("/projects/{projectId}")

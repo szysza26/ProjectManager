@@ -15,5 +15,7 @@ public class ProjectSummaryDTO {
 
 	private Long id;
 	private String name;
+	private Boolean active;
 	private LocalDateTime createdAt;
+	private String createdBy;
 }

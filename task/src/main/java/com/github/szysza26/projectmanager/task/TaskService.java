@@ -24,22 +24,12 @@ public class TaskService {
 		return taskConverter.taskToTaskDetailedDTO (task);
 	}
 
-	public TaskDetailedDTO createTask(Long projectId, CreateTaskRequest createTaskRequest) {
+	public TaskDetailedDTO createTask(Long projectId, CreateTaskRequest createTaskRequest, String userId) {
 		Task task = new Task ();
 		task.setProjectId (projectId);
 		task.setName (createTaskRequest.getName ());
 		task.setDescription (createTaskRequest.getDescription ());
-		taskRepository.save (task);
-
-		return taskConverter.taskToTaskDetailedDTO (task);
-	}
-
-	public TaskDetailedDTO updateTask(Long taskId, CreateTaskRequest createTaskRequest) {
-		Task task = taskRepository.findById (taskId)
-				.orElseThrow (() -> new RuntimeException ("Task not found"));
-
-		task.setName (createTaskRequest.getName ());
-		task.setDescription (createTaskRequest.getDescription ());
+		task.setCreatedBy (userId);
 		taskRepository.save (task);
 
 		return taskConverter.taskToTaskDetailedDTO (task);

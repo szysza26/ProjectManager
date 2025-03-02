@@ -17,7 +17,9 @@ public class Project {
 	private Long id;
 	private String name;
 	private String description;
+	private Boolean active = Boolean.FALSE;
 	@CreationTimestamp
 	@Column(updatable = false)
 	private LocalDateTime createdAt;
+	private String createdBy;
 }

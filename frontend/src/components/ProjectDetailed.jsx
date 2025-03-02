@@ -65,6 +65,8 @@ const ProjectDetailed = ({projectId, goToProjectListPage, goToTaskDetailedPage, 
             {project !== null && <>
                 <Typography>Project name: {project.name}</Typography>
                 <Typography>Project created at: {project.createdAt}</Typography>
+                <Typography>Project created by: {project.createdBy}</Typography>
+                <Typography>Project active: {`${project.active}`}</Typography>
                 <Typography>Project description: {project.description}</Typography>
             </>}
             <Button
@@ -98,7 +100,7 @@ const ProjectDetailed = ({projectId, goToProjectListPage, goToTaskDetailedPage, 
                                     <TaskIcon/>
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={`${task.name} (${task.status})`} secondary={task.createdAt}/>
+                            <ListItemText primary={`${task.name} (${task.status})`} secondary={`${task.createdAt} (${task.createdBy})`}/>
                         </ListItemButton>
                     </ListItem>
                 )}

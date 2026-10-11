@@ -1,21 +1,12 @@
 import { AppBar, IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
-import { useContext, useMemo, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../AuthProvider";
 import { AccountCircle } from "@mui/icons-material";
-import { jwtDecode } from "jwt-decode";
 
 const Nav = ({goToProjectListPage}) => {
-    const { logout, token } = useContext(AuthContext);
+    const { logout, user } = useContext(AuthContext);
 
     const [anchorEl, setAnchorEl] = useState(null);
-
-    const user = useMemo(() => {
-        if(!token)
-            return '';
-
-        const decodedJwt = jwtDecode(token);
-        return decodedJwt.name;
-    }, [token])
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);

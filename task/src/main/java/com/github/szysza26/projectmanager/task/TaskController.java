@@ -2,6 +2,7 @@ package com.github.szysza26.projectmanager.task;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,7 @@ public class TaskController {
 	}
 
 	@PostMapping ("/tasks/project/{projectId}")
+	@PreAuthorize ("hasRole('CREATE_TASK')")
 	public TaskDetailedDTO createTask(@PathVariable Long projectId,
 									  @Valid @RequestBody CreateTaskRequest createTaskRequest,
 									  Authentication authentication) {
@@ -31,11 +33,13 @@ public class TaskController {
 	}
 
 	@DeleteMapping("/tasks/{taskId}")
+	@PreAuthorize ("hasRole('DELETE_TASK')")
 	public void deleteTask(@PathVariable Long taskId) {
 		taskService.deleteTask (taskId);
 	}
 
 	@DeleteMapping("/tasks/project/{projectId}")
+	@PreAuthorize ("hasRole('DELETE_TASK')")
 	public void deleteTasksForProject(@PathVariable Long projectId) {
 		taskService.deleteTasksForProject (projectId);
 	}

@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../AuthProvider";
 import { deleteTask, getTask } from "../api/tasks";
 import { Typography, IconButton, Button, Alert } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -6,6 +7,8 @@ import ConfirmDialog from "./ConfirmDialog";
 import ModalCircularProgress from "./ModalCircularProgress";
 
 const TaskDetailed = ({projectId, taskId, goToProjectDetailedPage}) => {
+    const { roles } = useContext(AuthContext);
+
     const [task, setTask] = useState(null);
     const [isFetching, setIsFetching] = useState(true);
     const [isError, setIsError] = useState(false);
@@ -58,7 +61,7 @@ const TaskDetailed = ({projectId, taskId, goToProjectDetailedPage}) => {
                 onClick={() => setIsOpenDeleteDialog(true)}
                 sx={{mt: 3}}
                 color="error"
-                disabled={isDeletingTask}
+                disabled={isDeletingTask || !roles.includes("DELETE_TASK")}
             >
                 Delete task
             </Button>

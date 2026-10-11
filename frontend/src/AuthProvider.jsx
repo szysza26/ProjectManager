@@ -8,6 +8,8 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState();
+    const [user, setUser] = useState("");
+    const [roles, setRoles] = useState([]);
     const [isRefreshingToken, setIsRefreshingToken] = useState(true);
 
     const login = async (username, password) => {
@@ -81,8 +83,19 @@ export const AuthProvider = ({ children }) => {
 
     }, [token])
 
+    useEffect(() => {
+        if(!token){
+            setUser("");
+            setRoles([]);
+        }else{
+            const decodedJwt = jwtDecode(token);
+            setUser(decodedJwt.name);
+            setRoles(decodedJwt.realm_access.roles);
+        }
+    }, [token])
+
     return (
-        <AuthContext.Provider value={{ login, logout, token }}>
+        <AuthContext.Provider value={{ login, logout, token, user, roles }}>
             {isRefreshingToken ? 
                 <ModalCircularProgress
                     isOpen={true}

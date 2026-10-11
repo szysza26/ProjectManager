@@ -2,6 +2,7 @@ package com.github.szysza26.projectmanager.project;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,12 +25,14 @@ public class ProjectController {
 	}
 
 	@PostMapping("/projects")
+	@PreAuthorize ("hasRole('CREATE_PROJECT')")
 	public ProjectDetailedDTO createProject(@Valid @RequestBody CreateProjectRequest createProjectRequest,
 											Authentication authentication) {
 		return projectService.createProject (createProjectRequest, authentication.getName ());
 	}
 
 	@DeleteMapping("/projects/{projectId}")
+	@PreAuthorize("hasRole('DELETE_PROJECT')")
 	public void deleteProject(@PathVariable Long projectId) {
 		projectService.deleteProject (projectId);
 	}

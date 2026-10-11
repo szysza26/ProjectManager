@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../AuthProvider";
 import { deleteProject, getProject } from "../api/projects";
 import { getTasksForProject } from "../api/tasks";
 import { Avatar, IconButton, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography, Box, Modal, Button, CircularProgress, Alert } from "@mui/material";
@@ -8,6 +9,8 @@ import ConfirmDialog from "./ConfirmDialog";
 import ModalCircularProgress from "./ModalCircularProgress";
 
 const ProjectDetailed = ({projectId, goToProjectListPage, goToTaskDetailedPage, goToNewTaskPage}) => {
+    const { roles } = useContext(AuthContext);
+
     const [project, setProject] = useState(null);
     const [isFetchingProject, setIsFetchingProject] = useState(true);
     const [isErrorProject, setIsErrorProject] = useState(false);
@@ -73,7 +76,7 @@ const ProjectDetailed = ({projectId, goToProjectListPage, goToTaskDetailedPage, 
                 onClick={() => setIsOpenDeleteDialog(true)}
                 sx={{mt: 3}}
                 color="error"
-                disabled={isDeletingProject}
+                disabled={isDeletingProject || !roles.includes("DELETE_PROJECT")}
             >
                 Delete project
             </Button>
@@ -105,7 +108,7 @@ const ProjectDetailed = ({projectId, goToProjectListPage, goToTaskDetailedPage, 
                     </ListItem>
                 )}
             </List>}
-            <Button onClick={() => goToNewTaskPage(projectId)} >New task</Button>
+            <Button onClick={() => goToNewTaskPage(projectId)} disabled={!roles.includes("CREATE_TASK")}>New task</Button>
         </>
     )
 }

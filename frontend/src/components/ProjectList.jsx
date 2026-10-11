@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../AuthProvider";
 import { getProjects } from "../api/projects";
 import { Avatar, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography, Button } from "@mui/material";
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
 const ProjectList = ({goToProjectDetailedPage, goToNewProjectPage}) => {
+    const { roles } = useContext(AuthContext);
+
     const [projects, setProjects] = useState([]);
     const [isFetching, setIsFetching] = useState(true);
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
-        console.log("loading")
         getProjects()
             .then(res => setProjects(res))
             .catch(() => setIsError(true))
@@ -35,7 +37,7 @@ const ProjectList = ({goToProjectDetailedPage, goToNewProjectPage}) => {
                     </ListItem>
                 )}
             </List>}
-            <Button onClick={goToNewProjectPage} >New project</Button>
+            <Button onClick={goToNewProjectPage} disabled={!roles.includes("CREATE_PROJECT")}>New project</Button>
         </>
     )
 }
